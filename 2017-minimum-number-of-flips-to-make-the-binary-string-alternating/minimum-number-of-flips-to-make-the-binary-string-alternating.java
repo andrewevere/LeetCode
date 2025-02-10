@@ -1,41 +1,33 @@
 class Solution {
     public int minFlips(String s) {
-        int n = s.length();
-        s = s + s;
-        StringBuilder alt1 = new StringBuilder();
-        StringBuilder alt2 = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            alt1.append(i % 2 == 0 ? "0" : "1");
-            alt2.append(i % 2 == 0 ? "1" : "0");
+        String s2 = s+s;
+        int left = 0;
+        int currentNum1 = 0;
+        int currentNum2 = 0;
+        int ans = Integer.MAX_VALUE;
+        int k = s.length();
+
+        for(int right=0;right<s2.length();right++){
+            if((right%2==0&&s2.charAt(right)=='0')||(right%2==1&&s2.charAt(right)=='1')){
+                currentNum1 ++;
+            }else{
+                currentNum2 ++;
+            }
+
+            if(right-left+1<k){
+                continue;
+            }
+
+            ans = Math.min(Math.min(ans,currentNum1),currentNum2);
+
+            if((left%2==0&&s2.charAt(left)=='0')||(left%2==1&&s2.charAt(left)=='1')){
+                currentNum1 --;
+            }else{
+                currentNum2 --;
+            }
+            left++;
         }
 
-        int res = s.length();
-        int diff1 = 0;
-        int diff2 = 0;
-        int l = 0;
-        for (int r = 0; r < s.length(); r++) {
-            if (s.charAt(r) != alt1.charAt(r)) {
-                diff1++;
-            }
-            if (s.charAt(r) != alt2.charAt(r)) {
-                diff2++;
-            }
-
-            if ((r - l + 1) > n) {
-                if (s.charAt(l) != alt1.charAt(l)) {
-                    diff1--;
-                }
-                if (s.charAt(l) != alt2.charAt(l)) {
-                    diff2--;
-                }
-                l++;
-            }
-
-            if ((r - l + 1) == n) {
-                res = Math.min(res, Math.min(diff1, diff2));
-            }
-        }
-
-        return res;
+        return ans;
     }
 }
