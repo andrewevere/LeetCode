@@ -1,9 +1,7 @@
 class ProductOfNumbers {
-    private List<Integer> nums;
     private List<Long> prefixProducts;
-    
+
     public ProductOfNumbers() {
-        nums = new ArrayList<>();
         prefixProducts = new ArrayList<>();
         prefixProducts.add(1L);
     }
